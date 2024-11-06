@@ -1,25 +1,25 @@
-const compression = require("compression");
-const express = require("express");
-const { default: helmet } = require("helmet");
-const morgan = require("morgan");
-const app = express();
+require('dotenv').config()
+const compression = require('compression')
+const express = require('express')
+const { default: helmet } = require('helmet')
+const morgan = require('morgan')
+const app = express()
 
 //init middleware
-app.use(morgan("dev"));
-app.use(helmet());
-app.use(compression());
+app.use(morgan('dev'))
+app.use(helmet())
+app.use(compression())
 
-//init db
-require("./database/init.mongodb.lv0");
-const { checkOverload } = require("./helpers/check.connect");
-checkOverload();
+//init database
+require('./database/init.mongodb')
+const { checkOverload } = require('./helpers/check.connect')
+checkOverload()
 
-//routing
-app.get("/", (res, next) => {
-  return res.status(200).json({
-    message: "Welcome",
-  });
-});
+//init route
+app.get('/', (req, res, next) => {
+	return res.status(500).json({
+		message: 'Welcome',
+	})
+})
 
-//handle err
-module.exports = app;
+module.exports = app
