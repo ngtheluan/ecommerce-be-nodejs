@@ -1,7 +1,7 @@
 'use strict'
 const { model, Schema } = require('mongoose')
 const DOCUMENT_NAME = 'key'
-const COLLECTION_NAME = 'keys'
+const COLLECTION_NAME = 'Keys'
 
 // Declara the Schema of the Mongo model
 const keyTokenSchema = new Schema(
@@ -12,6 +12,10 @@ const keyTokenSchema = new Schema(
 			ref: 'Shop',
 		},
 		publicKey: {
+			type: String,
+			required: true,
+		},
+		privateKey: {
 			type: String,
 			required: true,
 		},
