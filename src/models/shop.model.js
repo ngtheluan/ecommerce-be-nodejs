@@ -1,44 +1,44 @@
-"use strict";
+'use strict'
+// shortcut create models : !dmbg
+const { model, Schema } = require('mongoose')
+const DOCUMENT_NAME = 'shop'
+const COLLECTION_NAME = 'Shops'
 
-const { model, Schema, Types } = require("mongoose");
-
-const DOCUMENT_NAME = "Shop";
-const COLLECTION_NAME = "Shops";
-
+// Declara the Schema of the Mongo model
 const shopSchema = new Schema(
-  {
-    name: {
-      type: String,
-      trim: true,
-      maxLength: 150,
-    },
-    email: {
-      type: String,
-      unique: true,
-      trim: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: String,
-      enum: ["active", "inactive"],
-      default: "inactive",
-    },
-    verfify: {
-      type: Schema.Types.Boolean,
-      default: false,
-    },
-    roles: {
-      type: Array,
-      default: [],
-    },
-  },
-  {
-    timestamps: true,
-    collection: COLLECTION_NAME,
-  }
-);
+	{
+		name: {
+			type: String,
+			trim: true,
+			maxLength: 150,
+		},
+		email: {
+			type: String,
+			unique: true,
+			trim: true,
+		},
+		password: {
+			type: String,
+			required: true,
+		},
+		status: {
+			type: String,
+			enum: ['active', 'inactive'],
+			default: 'inactive',
+		},
+		verfify: {
+			type: Schema.Types.Boolean,
+			default: false,
+		},
+		roles: {
+			type: Array,
+			default: [],
+		},
+	},
+	{
+		timestamps: true,
+		collection: COLLECTION_NAME,
+	}
+)
 
-exports = model(DOCUMENT_NAME, shopSchema);
+module.exports = model(DOCUMENT_NAME, shopSchema)
