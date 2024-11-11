@@ -19,7 +19,9 @@ class AccessService {
 		try {
 			// check email exist ?
 			const holderShop = await shopModel.findOne({ email }).lean()
-			if (holderShop) throw new BadRequestError('BadRequestError')
+			if (holderShop) {
+				throw new BadRequestError('BadRequestError')
+			}
 
 			// hash password for security
 			const passwordHash = await bcrypt.hash(password, 10)
@@ -58,8 +60,9 @@ class AccessService {
 					privateKey,
 				})
 
-				if (!keyStore) throw new BadRequestError('Create key token fail')
-
+				if (!keyStore) {
+					throw new BadRequestError('Create key token fail')
+				}
 				//created token pair
 				const tokens = await createTokenPair(
 					{
