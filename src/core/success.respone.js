@@ -39,8 +39,10 @@ class CREATED extends SuccessResponse {
 		statusCode = StatusCode.CREATED,
 		reasonStatusCode = ReasonStatusCode.CREATED,
 		metadata,
+		options = {},
 	}) {
 		super({ message, statusCode, reasonStatusCode, metadata })
+		this.options = options
 	}
 }
 

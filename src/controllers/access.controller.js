@@ -7,6 +7,9 @@ class AccessController {
 		new CREATED({
 			message: 'Registered OK !',
 			metadata: await AccessService.signUp(req.body),
+			options: {
+				limit: 10,
+			},
 		}).send(res)
 	}
 }
