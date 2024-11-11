@@ -58,13 +58,7 @@ class AccessService {
 					privateKey,
 				})
 
-				if (!keyStore) {
-					return {
-						code: 'xxxx',
-						message: 'Create key token fail',
-						status: 'error',
-					}
-				}
+				if (!keyStore) throw new BadRequestError('Create key token fail')
 
 				//created token pair
 				const tokens = await createTokenPair(
@@ -91,11 +85,7 @@ class AccessService {
 				metadata: null,
 			}
 		} catch (error) {
-			return {
-				code: 'xxx',
-				message: error.message,
-				status: 'error',
-			}
+			throw new BadRequestError(error.message)
 		}
 	}
 }

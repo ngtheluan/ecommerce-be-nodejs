@@ -1,8 +1,8 @@
 'use strict'
 const express = require('express')
-const accessController = require('../../controllers/access.controller')
-const { asyncHandler } = require('../../auth/checkAuth')
 const router = express.Router()
+const { asyncHandler } = require('../../auth/checkAuth')
+const accessController = require('../../controllers/access.controller')
 
 router.post('/shop/signup', asyncHandler(accessController.signUp))
 
