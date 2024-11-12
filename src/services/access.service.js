@@ -16,7 +16,12 @@ const RoleShop = {
 }
 
 class AccessService {
-	static login = async ({ refreshToken = null, email, password }) => {
+	static logout = async (keyStore) => {
+		const delKey = await KeyTokenService.removeKeyById(keyStore._id)
+		return delKey
+	}
+
+	static login = async ({ email, password, refreshToken = null }) => {
 		//step 1: check email in dbs
 		const foundShop = await findByEmail({ email })
 		if (!foundShop) throw new BadRequestError('Shop not registered!')
@@ -53,7 +58,7 @@ class AccessService {
 		}
 	}
 
-	static signUp = async ({ name, email, password }) => {
+	static signUp = async ({ name, email, password, refreshToken = null }) => {
 		try {
 			// check email exist ?
 			const holderShop = await shopModel.findOne({ email }).lean()
