@@ -30,26 +30,27 @@ class AccessService {
 		const publicKey = crypto.randomBytes(64).toString('hex') //verify-token
 
 		//step 4: genarate token
+		const { _id: userId } = foundShop._id
 		const tokens = await createTokenPair(
 			{
-				userId: foundShop._id,
+				userId,
 				email,
 			},
 			publicKey,
 			privateKey
 		)
 
+		//step 5: get data and return login
 		await KeyTokenService.createKeyToken({
 			refreshToken: tokens.refreshToken,
-			privateKey: privateKey,
-			publicKey: publicKey,
+			privateKey,
+			publicKey,
+			userId,
 		})
 		return {
 			shop: getInfoData({ fields: ['_id', 'name', 'email'], object: foundShop }),
 			tokens,
 		}
-
-		//step 5: get data and return login
 	}
 
 	static signUp = async ({ name, email, password }) => {
