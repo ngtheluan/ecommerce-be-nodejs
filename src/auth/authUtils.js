@@ -12,7 +12,6 @@ const HEADER = {
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
 	try {
-		//accessToken
 		const accessToken = JWT.sign(payload, publicKey, {
 			expiresIn: '2 days',
 		})
@@ -58,8 +57,13 @@ const authentication = asyncHandler(async (req, res, next) => {
 	}
 })
 
+const verifyJWT = async (token, keySecret) => {
+	return await JWT.verify(token, keySecret)
+}
+
 module.exports = {
 	HEADER,
 	createTokenPair,
 	authentication,
+	verifyJWT,
 }
