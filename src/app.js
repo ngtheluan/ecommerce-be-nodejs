@@ -24,7 +24,7 @@ app.use('', require('./routers'))
 app.use((req, res, next) => {
 	const error = new Error('Not Found')
 	error.status = 404
-	next(error)
+	// next(error)
 })
 
 app.use((error, req, res, next) => {
@@ -32,7 +32,7 @@ app.use((error, req, res, next) => {
 	return res.status(statusCode).json({
 		status: 'error',
 		code: statusCode,
-		//stack: error.stack,
+		stack: error.stack,
 		message: error.message || 'Internal Server Error',
 	})
 })

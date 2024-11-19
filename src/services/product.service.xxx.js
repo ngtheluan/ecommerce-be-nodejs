@@ -1,6 +1,17 @@
 'use strict'
 const { clothing, electronics, product, furniture } = require('../models/product.model')
 const { BadRequestError } = require('../core/error.response')
+const {
+	findAllDraftsForShop,
+	findAllPublishForShop,
+	publishProductByShop,
+	unPublishProductByShop,
+	searchProductByUser,
+} = require('../models/repositories/product.repo')
+
+const DOCUMENT_NAME_CLOTHING = 'Clothing'
+const DOCUMENT_NAME_ELECTRONICS = 'Electronics'
+const DOCUMENT_NAME_FURNITURE = 'Furniture'
 
 //define Factory class to create Product
 class ProductFactory {
@@ -14,6 +25,41 @@ class ProductFactory {
 		const productClass = ProductFactory.productRegisty[type]
 		if (!productClass) throw new BadRequestError(`Invalid product type ${type}`)
 		return new productClass(payload).createProduct()
+	}
+
+	//GET
+	static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
+		const query = { product_shop, isDraft: true }
+		return await findAllDraftsForShop({
+			query,
+			limit,
+			skip,
+		})
+	}
+
+	//GET
+	static async findAllPublishForShop({ product_shop, limit = 50, skip = 0 }) {
+		const query = { product_shop, isPublished: true }
+		return await findAllPublishForShop({
+			query,
+			limit,
+			skip,
+		})
+	}
+
+	//POST
+	static async publishProductByShop({ product_shop, product_id }) {
+		return await publishProductByShop({ product_shop, product_id })
+	}
+
+	//POST
+	static async unPublishProductByShop({ product_shop, product_id }) {
+		return await unPublishProductByShop({ product_shop, product_id })
+	}
+
+	//GET
+	static async getListSearchProduct({ keysearch }) {
+		return await searchProductByUser({ keysearch })
 	}
 }
 
@@ -87,10 +133,6 @@ class Furniture extends Product {
 		return newProduct
 	}
 }
-
-const DOCUMENT_NAME_CLOTHING = 'Clothing'
-const DOCUMENT_NAME_ELECTRONICS = 'Electronics'
-const DOCUMENT_NAME_FURNITURE = 'Furniture'
 
 ProductFactory.registerProductType(DOCUMENT_NAME_ELECTRONICS, Electronics)
 ProductFactory.registerProductType(DOCUMENT_NAME_CLOTHING, Clothing)

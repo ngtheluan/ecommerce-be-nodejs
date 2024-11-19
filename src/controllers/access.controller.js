@@ -4,12 +4,6 @@ const AccessService = require('../services/access.service')
 
 class AccessController {
 	handleRefreshToken = async (req, res, next) => {
-		// new SuccessResponse({
-		// 	message: 'Get token success !',
-		// 	metadata: await AccessService.handleRefreshToken(req.body.refreshToken),
-		// }).send(res)
-
-		// v2 no need refreshToken
 		new SuccessResponse({
 			message: 'Get token success !',
 			metadata: await AccessService.handleRefreshTokenV2({
@@ -18,6 +12,7 @@ class AccessController {
 				keyStore: req.keyStore,
 			}),
 		}).send(res)
+		next()
 	}
 
 	logout = async (req, res, next) => {
@@ -31,6 +26,7 @@ class AccessController {
 		new SuccessResponse({
 			metadata: await AccessService.login(req.body),
 		}).send(res)
+		next()
 	}
 
 	signUp = async (req, res, next) => {
@@ -41,6 +37,7 @@ class AccessController {
 				limit: 10,
 			},
 		}).send(res)
+		next()
 	}
 }
 

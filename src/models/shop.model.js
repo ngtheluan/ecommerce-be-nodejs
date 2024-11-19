@@ -1,7 +1,7 @@
 'use strict'
 // shortcut create models : !dmbg
 const { model, Schema } = require('mongoose')
-const DOCUMENT_NAME = 'shop'
+const DOCUMENT_NAME = 'Shop'
 const COLLECTION_NAME = 'Shops'
 
 // Declara the Schema of the Mongo model

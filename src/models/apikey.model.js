@@ -1,5 +1,4 @@
 'use strict'
-const { uniq } = require('lodash')
 const { model, Schema } = require('mongoose')
 const DOCUMENT_NAME = 'Apikey'
 const COLLECTION_NAME = 'Apikeys'
