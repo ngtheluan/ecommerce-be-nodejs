@@ -4,6 +4,8 @@ const { BadRequestError } = require('../core/error.response')
 const {
 	findAllDraftsForShop,
 	findAllPublishForShop,
+	findAllProducts,
+	findProduct,
 	publishProductByShop,
 	unPublishProductByShop,
 	searchProductByUser,
@@ -21,13 +23,21 @@ class ProductFactory {
 		ProductFactory.productRegisty[type] = classRef
 	}
 
+	//createProduct
 	static async createProduct(type, payload) {
 		const productClass = ProductFactory.productRegisty[type]
 		if (!productClass) throw new BadRequestError(`Invalid product type ${type}`)
 		return new productClass(payload).createProduct()
 	}
 
-	//GET
+	//updateProduct
+	static async updateProduct(type, payload) {
+		const productClass = ProductFactory.productRegisty[type]
+		if (!productClass) throw new BadRequestError(`Invalid product type ${type}`)
+		return new productClass(payload).createProduct()
+	}
+
+	//findAllDraftsForShop
 	static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
 		const query = { product_shop, isDraft: true }
 		return await findAllDraftsForShop({
@@ -37,7 +47,7 @@ class ProductFactory {
 		})
 	}
 
-	//GET
+	//findAllPublishForShop
 	static async findAllPublishForShop({ product_shop, limit = 50, skip = 0 }) {
 		const query = { product_shop, isPublished: true }
 		return await findAllPublishForShop({
@@ -47,19 +57,42 @@ class ProductFactory {
 		})
 	}
 
-	//POST
+	//publishProductByShop
 	static async publishProductByShop({ product_shop, product_id }) {
 		return await publishProductByShop({ product_shop, product_id })
 	}
 
-	//POST
+	//unPublishProductByShop
 	static async unPublishProductByShop({ product_shop, product_id }) {
 		return await unPublishProductByShop({ product_shop, product_id })
 	}
 
-	//GET
+	//getListSearchProduct
 	static async getListSearchProduct({ keysearch }) {
 		return await searchProductByUser({ keysearch })
+	}
+
+	//findAllProducts
+	static async findAllProducts({
+		limit = 50,
+		sort = 'ctime',
+		page = 1,
+		filter = {
+			isPublished: true,
+		},
+	}) {
+		return await findAllProducts({
+			limit,
+			sort,
+			page,
+			filter,
+			select: ['product_name', 'product_price', 'product_thumb'],
+		})
+	}
+
+	//findProduct
+	static async findProduct({ product_id }) {
+		return await findProduct({ product_id, unSelect: ['__v'] })
 	}
 }
 
