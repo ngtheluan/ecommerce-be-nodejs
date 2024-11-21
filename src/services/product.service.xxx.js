@@ -9,7 +9,9 @@ const {
 	publishProductByShop,
 	unPublishProductByShop,
 	searchProductByUser,
+	updateProductById,
 } = require('../models/repositories/product.repo')
+const { removeUndefinedNullObject, updateNestedObject } = require('../utils/index')
 
 const DOCUMENT_NAME_CLOTHING = 'Clothing'
 const DOCUMENT_NAME_ELECTRONICS = 'Electronics'
@@ -31,10 +33,10 @@ class ProductFactory {
 	}
 
 	//updateProduct
-	static async updateProduct(type, payload) {
+	static async updateProduct(type, productId, payload) {
 		const productClass = ProductFactory.productRegisty[type]
 		if (!productClass) throw new BadRequestError(`Invalid product type ${type}`)
-		return new productClass(payload).createProduct()
+		return new productClass(payload).updateProduct(productId)
 	}
 
 	//findAllDraftsForShop
@@ -122,6 +124,11 @@ class Product {
 	async createProduct(product_id) {
 		return await product.create({ ...this, _id: product_id })
 	}
+
+	//update product
+	async updateProduct(productId, payload) {
+		return await updateProductById({ productId, payload, model: product })
+	}
 }
 
 //define sub class different product type Clothing
@@ -132,6 +139,28 @@ class Clothing extends Product {
 		const newProduct = await super.createProduct()
 		if (!newProduct) throw new BadRequestError('Create new Product error !')
 		return newProduct
+	}
+
+	//updateProduct
+	async updateProduct(productId) {
+		// remove attribute has null undefined
+		const objectParams = removeUndefinedNullObject(this)
+
+		// updated nested object
+		const objectNestedParams = updateNestedObject(objectParams.product_attributes)
+
+		if (objectParams.product_attributes) {
+			//update child
+			await updateProductById({
+				productId,
+				payload: objectNestedParams,
+				model: clothing,
+			})
+		}
+
+		//update Product
+		const updateProduct = await super.updateProduct(productId, updateNestedObject(objectParams))
+		return updateProduct
 	}
 }
 
