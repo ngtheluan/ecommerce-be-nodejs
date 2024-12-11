@@ -35,7 +35,7 @@ const discountSchema = new Schema(
 			type: Date,
 			required: true,
 		},
-		// số lượng discount được áp dụng
+		// số lượng tối đa discount được áp dụng
 		discount_max_uses: {
 			type: Number,
 			required: true,
@@ -64,6 +64,7 @@ const discountSchema = new Schema(
 			type: Schema.Types.ObjectId,
 			ref: 'Shop',
 		},
+		// được áp dụng discount không
 		discount_is_active: {
 			type: Boolean,
 			default: true,

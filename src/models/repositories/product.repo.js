@@ -1,7 +1,7 @@
 'use strict'
 const { product } = require('../product.model')
 const { Types } = require('mongoose')
-const { getUnSelectData, getSelectData } = require('../../utils/index')
+const { getUnSelectData, getSelectData, convertToObjectId } = require('../../utils/index')
 
 const queryProduct = async ({ query, limit, skip }) => {
 	return await product
@@ -32,8 +32,8 @@ const findAllPublishForShop = async ({ query, limit, skip }) => {
 
 const publishProductByShop = async ({ product_shop, product_id }) => {
 	const foundShop = product.findOne({
-		_id: new Types.ObjectId(product_id),
-		product_shop: new Types.ObjectId(product_shop),
+		_id: convertToObjectId(product_id),
+		product_shop: convertToObjectId(product_shop),
 	})
 
 	if (!foundShop) return null
@@ -47,8 +47,8 @@ const publishProductByShop = async ({ product_shop, product_id }) => {
 
 const unPublishProductByShop = async ({ product_shop, product_id }) => {
 	const foundShop = product.findOne({
-		_id: new Types.ObjectId(product_id),
-		product_shop: new Types.ObjectId(product_shop),
+		_id: convertToObjectId(product_id),
+		product_shop: convertToObjectId(product_shop),
 	})
 
 	if (!foundShop) return null
