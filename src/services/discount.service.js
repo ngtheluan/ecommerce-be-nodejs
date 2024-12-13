@@ -4,7 +4,6 @@ const { BadRequestError, NotFoundError } = require('../core/error.response')
 const { convertToObjectId } = require('../utils/index')
 const { findAllProducts } = require('./product.service.xxx')
 const {
-	findAllDiscountCodesUnUsed,
 	checkDiscountExists,
 	findAllDiscountCodesSelect,
 } = require('../models/repositories/discount.repo')

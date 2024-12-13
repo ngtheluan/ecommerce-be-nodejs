@@ -1,6 +1,6 @@
 'use strict'
-const { convertToObjectId } = require('../utils/index')
 const keyTokenModel = require('../models/keytoken.model')
+const { convertToObjectId } = require('../utils/index')
 
 class KeyTokenService {
 	static createKeyToken = async ({ userId, publicKey, privateKey, refreshToken }) => {
