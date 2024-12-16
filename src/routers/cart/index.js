@@ -8,8 +8,8 @@ const { authenticationV2 } = require('../../auth/authUtils')
 router.use(authenticationV2)
 
 router.post('', asyncHandler(CartController.addToCart))
-router.delete('', asyncHandler(CartController.deleteUserCartItem))
 router.post('/update', asyncHandler(CartController.update))
 router.get('', asyncHandler(CartController.getListCart))
+router.delete('', asyncHandler(CartController.deleteUserCartItem))
 
 module.exports = router

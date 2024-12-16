@@ -26,18 +26,18 @@ class CartController {
 		next()
 	}
 
-	deleteUserCartItem = async (req, res, next) => {
-		new SuccessResponse({
-			message: 'Delete card succcess !',
-			metadata: await CartService.deleteUserCartItem(req.body),
-		}).send(res)
-		next()
-	}
-
 	getListCart = async (req, res, next) => {
 		new SuccessResponse({
 			message: 'Get list cart succcess !',
 			metadata: await CartService.getListCart(req.query),
+		}).send(res)
+		next()
+	}
+
+	deleteUserCartItem = async (req, res, next) => {
+		new SuccessResponse({
+			message: 'Delete card succcess !',
+			metadata: await CartService.deleteUserCartItem(req.body),
 		}).send(res)
 		next()
 	}
