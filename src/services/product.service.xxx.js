@@ -76,14 +76,7 @@ class ProductFactory {
 	}
 
 	//findAllProducts
-	static async findAllProducts({
-		limit = 50,
-		sort = 'ctime',
-		page = 1,
-		filter = {
-			isPublished: true,
-		},
-	}) {
+	static async findAllProducts({ limit = 50, sort = 'ctime', page = 1, filter = {} }) {
 		return await findAllProducts({
 			limit,
 			sort,

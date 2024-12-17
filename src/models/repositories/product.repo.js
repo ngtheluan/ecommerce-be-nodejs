@@ -1,6 +1,5 @@
 'use strict'
 const { product } = require('../product.model')
-const { Types } = require('mongoose')
 const { getUnSelectData, getSelectData, convertToObjectId } = require('../../utils/index')
 
 const queryProduct = async ({ query, limit, skip }) => {
@@ -105,6 +104,21 @@ const getProductById = async (productId) => {
 		.lean()
 }
 
+const checkProductByServer = async (products) => {
+	return await Promise.all(
+		products.map(async (item) => {
+			const foundProduct = await getProductById(item.productId)
+			if (foundProduct) {
+				return {
+					price: foundProduct.product_price,
+					quantity: item.quantity,
+					productId: item.productId,
+				}
+			}
+		})
+	)
+}
+
 module.exports = {
 	findAllDraftsForShop,
 	findAllPublishForShop,
@@ -115,4 +129,5 @@ module.exports = {
 	searchProductByUser,
 	updateProductById,
 	getProductById,
+	checkProductByServer,
 }

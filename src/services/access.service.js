@@ -98,7 +98,7 @@ class AccessService {
 		}
 	}
 
-	static signUp = async ({ name, email, password, refreshToken = null }) => {
+	static signUp = async ({ name, email, password }) => {
 		try {
 			// check email exist ?
 			const holderShop = await shopModel.findOne({ email }).lean()
