@@ -142,5 +142,7 @@ dist
 .svelte-kit
 
 src/postman
+src/.DS_Store
+.DS_Store
 
 # End of https://www.toptal.com/developers/gitignore/api/node
